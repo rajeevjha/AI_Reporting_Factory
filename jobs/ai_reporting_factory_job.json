@@ -1,0 +1,49 @@
+{
+  "name": "AI_Reporting_Factory_Full_Pipeline",
+  "tasks": [
+    {
+      "task_key": "etl",
+      "notebook_task": {
+        "notebook_path": "/Repos/your_repo/notebooks/01_modular_etl"
+      },
+      "existing_cluster_id": "YOUR_CLUSTER_ID"
+    },
+    {
+      "task_key": "ai_report_gen",
+      "depends_on": [
+        {
+          "task_key": "etl"
+        }
+      ],
+      "notebook_task": {
+        "notebook_path": "/Repos/your_repo/notebooks/02_ai_report_generator"
+      },
+      "existing_cluster_id": "YOUR_CLUSTER_ID"
+    },
+    {
+      "task_key": "export_notify",
+      "depends_on": [
+        {
+          "task_key": "ai_report_gen"
+        }
+      ],
+      "notebook_task": {
+        "notebook_path": "/Repos/your_repo/notebooks/03_report_export_notify"
+      },
+      "existing_cluster_id": "YOUR_CLUSTER_ID"
+    },
+    {
+      "task_key": "dashboard_publish",
+      "depends_on": [
+        {
+          "task_key": "ai_report_gen"
+        }
+      ],
+      "notebook_task": {
+        "notebook_path": "/Repos/your_repo/notebooks/04_dashboard_publisher"
+      },
+      "existing_cluster_id": "YOUR_CLUSTER_ID"
+    }
+  ],
+  "format": "MULTI_TASK"
+}
